@@ -1,0 +1,18 @@
+services:
+  postgres:
+    image: pgvector/pgvector:pg16
+    container_name: repolens-postgres
+
+    environment:
+      POSTGRES_USER: repolens
+      POSTGRES_PASSWORD: Vithal_2023
+      POSTGRES_DB: repolens
+
+    ports:
+      - "5432:5432"
+
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
