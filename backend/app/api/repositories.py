@@ -6,7 +6,11 @@ from app.schemas.repository import RepositoryIngestRequest
 from app.services.repository import parse_github_url
 from app.services.github import GitHubService
 from app.services.file_filter import should_include_file
+from app.models.chunk import CodeChunk
+
+
 from app.models import Repository, RepositoryFile
+from app.services.chunker import chunk_code
 
 
 router = APIRouter(
@@ -100,6 +104,26 @@ async def ingest_repository(
                 )
 
                 db.add(file)
+                db.flush()
+
+                chunks = chunk_code(
+                    path,
+                    content
+                )
+
+                for chunk_data in chunks:
+                    chunk = CodeChunk(
+                        repository_id=repository.id,
+                        file_id=file.id,
+                        file_path=path,
+                        language=chunk_data["language"],
+                        chunk_type=chunk_data["chunk_type"],
+                        symbol_name=chunk_data["symbol_name"],
+                        content=chunk_data["content"]
+                    )
+
+                    db.add(chunk)
+                    
                 files_added += 1
 
             except Exception:
