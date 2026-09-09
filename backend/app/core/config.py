@@ -10,7 +10,7 @@ env_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(current_
 class Settings(BaseSettings):
     database_url: str
 
-    openai_api_key: str = ""
+    groq_api_key: str = ""
     github_token: str = ""
     hf_token: str = ""
 

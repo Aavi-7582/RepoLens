@@ -9,7 +9,7 @@ from app.services.embeddings import generate_embedding
 from app.services.file_filter import should_include_file
 from app.models.chunk import CodeChunk
 from app.services.retriever import retrieve_similar_chunks
-
+from app.services.rag import answer_question
 
 
 from app.models import Repository, RepositoryFile
@@ -178,3 +178,16 @@ def search_repository(
         }
         for chunk in results
     ]
+
+
+@router.get("/ask")
+def ask_repository(
+    query: str,
+    db: Session = Depends(get_db)
+):
+    result = answer_question(
+        db,
+        query
+    )
+
+    return result
