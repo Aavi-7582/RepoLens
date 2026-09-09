@@ -1,4 +1,5 @@
 from sqlalchemy import Column, Integer, String, Text, ForeignKey
+from pgvector.sqlalchemy import VECTOR
 
 from app.core.database import Base
 
@@ -27,3 +28,8 @@ class CodeChunk(Base):
     symbol_name = Column(String, nullable=True)
 
     content = Column(Text, nullable=False)
+
+    embedding = Column(
+        VECTOR(384),
+        nullable=True
+    )

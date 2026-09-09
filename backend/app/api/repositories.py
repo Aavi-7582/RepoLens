@@ -5,8 +5,11 @@ from app.core.database import SessionLocal
 from app.schemas.repository import RepositoryIngestRequest
 from app.services.repository import parse_github_url
 from app.services.github import GitHubService
+from app.services.embeddings import generate_embedding
 from app.services.file_filter import should_include_file
 from app.models.chunk import CodeChunk
+from app.services.retriever import retrieve_similar_chunks
+
 
 
 from app.models import Repository, RepositoryFile
@@ -112,6 +115,10 @@ async def ingest_repository(
                 )
 
                 for chunk_data in chunks:
+                    embedding = generate_embedding(
+                        chunk_data["content"]
+                    )
+
                     chunk = CodeChunk(
                         repository_id=repository.id,
                         file_id=file.id,
@@ -119,14 +126,18 @@ async def ingest_repository(
                         language=chunk_data["language"],
                         chunk_type=chunk_data["chunk_type"],
                         symbol_name=chunk_data["symbol_name"],
-                        content=chunk_data["content"]
+                        content=chunk_data["content"],
+                        embedding=embedding
                     )
 
                     db.add(chunk)
                     
                 files_added += 1
 
-            except Exception:
+            except Exception as e:
+                import traceback
+                with open("ingest_errors.log", "a") as f:
+                    f.write(f"Error processing {path}: {e}\n{traceback.format_exc()}\n")
                 continue
 
         db.commit()
@@ -145,3 +156,25 @@ async def ingest_repository(
             status_code=400,
             detail=str(e)
         )
+
+@router.get("/search")
+def search_repository(
+    query: str,
+    db: Session = Depends(get_db)
+):
+    results = retrieve_similar_chunks(
+        db,
+        query,
+        limit=5
+    )
+
+    return [
+        {
+            "file_path": chunk.file_path,
+            "symbol_name": chunk.symbol_name,
+            "chunk_type": chunk.chunk_type,
+            "language": chunk.language,
+            "content": chunk.content
+        }
+        for chunk in results
+    ]

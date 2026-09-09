@@ -38,9 +38,9 @@ def extract_python_chunks(source_code: str):
             symbol_name = None
 
             if name_node:
-                symbol_name = source_code[
-                    name_node.start_byte:name_node.end_byte
-                ]
+                symbol_name = source_code.encode(
+                    "utf-8"
+                )[name_node.start_byte:name_node.end_byte].decode("utf-8")
 
             chunks.append({
                 "chunk_type": node.type,

@@ -12,6 +12,7 @@ class Settings(BaseSettings):
 
     openai_api_key: str = ""
     github_token: str = ""
+    hf_token: str = ""
 
     model_config = SettingsConfigDict(
         env_file=env_path,

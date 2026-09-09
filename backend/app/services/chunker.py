@@ -1,6 +1,7 @@
 from pathlib import Path
 from typing import List, Dict, Optional
 from app.services.parser import extract_python_chunks
+from app.services.embeddings import generate_embedding
 
 # Document supported languages
 SUPPORTED_PARSERS = {

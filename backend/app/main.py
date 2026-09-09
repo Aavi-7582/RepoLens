@@ -6,7 +6,11 @@ from app.models import Repository, RepositoryFile
 from app.api.repositories import router as repository_router
 
 
-Base.metadata.create_all(bind=engine)
+with engine.connect() as conn:
+    conn.execute(text("CREATE EXTENSION IF NOT EXISTS vector;"))
+    conn.commit()
+
+    Base.metadata.create_all(bind=engine)
 
 
 app = FastAPI(

@@ -61,7 +61,7 @@ class GitHubService:
         path: str
     ):
         headers = {
-            "Accept": "application/vnd.github.raw+json"
+            "Accept": "application/vnd.github.v3.raw"
         }
 
         if settings.github_token:
