@@ -4,7 +4,7 @@ from sqlalchemy import text
 from app.core.database import engine, Base
 from app.models import Repository, RepositoryFile
 from app.api.repositories import router as repository_router
-
+from fastapi.middleware.cors import CORSMiddleware
 
 with engine.connect() as conn:
     conn.execute(text("CREATE EXTENSION IF NOT EXISTS vector;"))
@@ -17,6 +17,14 @@ app = FastAPI(
     title="RepoLens API",
     description="AI-powered codebase intelligence assistant",
     version="0.1.0"
+)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 

@@ -66,8 +66,12 @@ async def ingest_repository(
         )
 
         if existing:
-            db.delete(existing)
-            db.commit()
+            return {
+                "message": "Repository already ingested. Using existing repository context.",
+                "repository_id": existing.id,
+                "repository": existing.full_name,
+                "cached": True
+            }
 
         repository = Repository(
             name=repository_data["name"],
@@ -144,9 +148,11 @@ async def ingest_repository(
 
         return {
             "message": "Repository ingested successfully",
+            "repository_id": repository.id,
             "repository": repository.full_name,
             "branch": branch,
-            "files_added": files_added
+            "files_added": files_added,
+            "cached": False
         }
 
     except Exception as e:
@@ -160,11 +166,13 @@ async def ingest_repository(
 @router.get("/search")
 def search_repository(
     query: str,
+    repository_id: int,
     db: Session = Depends(get_db)
 ):
     results = retrieve_similar_chunks(
         db,
         query,
+        repository_id,
         limit=5
     )
 
@@ -183,11 +191,13 @@ def search_repository(
 @router.get("/ask")
 def ask_repository(
     query: str,
+    repository_id: int,
     db: Session = Depends(get_db)
 ):
     result = answer_question(
         db,
-        query
+        query,
+        repository_id
     )
 
     return result

@@ -10,11 +10,13 @@ FALLBACK_TRIGGER = "I could not determine this from the provided repository cont
 def answer_question(
     db: Session,
     question: str,
+    repository_id: int,
     limit: int = 5
 ):
     chunks = retrieve_similar_chunks(
         db,
         question,
+        repository_id,
         limit
     )
 
