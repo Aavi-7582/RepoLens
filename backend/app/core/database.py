@@ -1,13 +1,21 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import declarative_base, sessionmaker
+from app.core.config import settings
 
-# Relative import prevents ModuleNotFoundError when running uvicorn
-from .config import settings
+db_url = settings.database_url
 
-# Force 127.0.0.1 to avoid Windows IPv6 (::1) lookup errors with Docker
-db_url = settings.database_url.replace("localhost", "127.0.0.1")
+# Handle Supabase connection string adjustments if necessary
+if db_url.startswith("postgres://"):
+    db_url = db_url.replace("postgres://", "postgresql://", 1)
 
-engine = create_engine(db_url)
+# Create engine with SSL parameters for remote Supabase DB
+engine = create_engine(
+    db_url,
+    connect_args={
+        "sslmode": "require"
+    },
+    pool_pre_ping=True  # Automatically reconnect if connection drops
+)
 
 SessionLocal = sessionmaker(
     autocommit=False,
@@ -16,7 +24,6 @@ SessionLocal = sessionmaker(
 )
 
 Base = declarative_base()
-
 
 def get_db():
     db = SessionLocal()

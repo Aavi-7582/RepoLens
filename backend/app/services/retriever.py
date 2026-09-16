@@ -26,4 +26,17 @@ def retrieve_similar_chunks(
         .all()
     )
 
-    return results
+    seen_files = set()
+    unique_results = []
+
+    for chunk in results:
+        if chunk.file_path in seen_files:
+            continue
+
+        seen_files.add(chunk.file_path)
+        unique_results.append(chunk)
+
+        if len(unique_results) == limit:
+            break
+
+    return unique_results

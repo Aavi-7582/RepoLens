@@ -1,8 +1,9 @@
 from groq import Groq
-
+import logging
 from app.core.config import settings
 
 
+logger = logging.getLogger(__name__)
 client = Groq(
     api_key=settings.groq_api_key
 )
@@ -33,20 +34,24 @@ Repository Context:
 User Question:
 {question}
 """
+    try:
+        response = client.chat.completions.create(
+            model=MODEL,
+            messages=[
+                {
+                    "role": "system",
+                    "content": "You are a precise codebase analysis assistant."
+                },
+                {
+                    "role": "user",
+                    "content": prompt
+                }
+            ],
+            temperature=0.1
+        )
 
-    response = client.chat.completions.create(
-        model=MODEL,
-        messages=[
-            {
-                "role": "system",
-                "content": "You are a precise codebase analysis assistant."
-            },
-            {
-                "role": "user",
-                "content": prompt
-            }
-        ],
-        temperature=0.1
-    )
+        return response.choices[0].message.content
 
-    return response.choices[0].message.content
+    except Exception as exc:
+        logger.error("LLM generation failed: %s", exc)
+        raise

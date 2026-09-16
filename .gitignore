@@ -3,9 +3,12 @@ __pycache__/
 *.py[cod]
 venv/
 .venv/
+env/
 
 # Environment
 .env
+.env.*
+!.env.example
 
 # Node
 node_modules/
@@ -28,3 +31,7 @@ postgres_data/
 # Python tools
 .pytest_cache/
 .mypy_cache/
+
+frontend/.env
+frontend/.env.*
+!frontend/.env.example

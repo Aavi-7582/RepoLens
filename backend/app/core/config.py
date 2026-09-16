@@ -14,6 +14,8 @@ class Settings(BaseSettings):
     github_token: str = ""
     hf_token: str = ""
 
+    frontend_url: str = "http://localhost:5173"
+
     model_config = SettingsConfigDict(
         env_file=env_path,
         env_file_encoding="utf-8",

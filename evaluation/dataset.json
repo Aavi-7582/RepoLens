@@ -1,0 +1,142 @@
+[
+  {
+    "question": "Where is the main entry point of the application?",
+    "expected_files": ["PythonCRUD/__main__.py"]
+  },
+  {
+    "question": "Where are command line arguments handled?",
+    "expected_files": ["PythonCRUD/__main__.py"]
+  },
+  {
+    "question": "How are command line options passed to the application?",
+    "expected_files": ["PythonCRUD/__main__.py"]
+  },
+  {
+    "question": "How does the application delete a record from the database?",
+    "expected_files": [
+      "PythonCRUD/crud/deleterecords.py",
+      "PythonCRUD/crud/deleterecordsimpl.py"
+    ]
+  },
+  {
+    "question": "How are records deleted from MySQL?",
+    "expected_files": [
+      "PythonCRUD/crud/deleterecords.py",
+      "PythonCRUD/crud/deleterecordsimpl.py"
+    ]
+  },
+  {
+    "question": "How does the application create a new record?",
+    "expected_files": [
+      "PythonCRUD/crud/insertrecords.py",
+      "PythonCRUD/crud/insertrecordimpl.py"
+    ]
+  },
+  {
+    "question": "How does the application update an existing record?",
+    "expected_files": [
+      "PythonCRUD/crud/updaterecords.py",
+      "PythonCRUD/crud/updaterecordsimpl.py"
+    ]
+  },
+  {
+    "question": "How does the application retrieve records from MySQL?",
+    "expected_files": [
+      "PythonCRUD/crud/retrieverecords.py",
+      "PythonCRUD/crud/retrieverecordsimpl.py"
+    ]
+  },
+  {
+    "question": "How are CRUD operations implemented?",
+    "expected_files": [
+      "PythonCRUD/crud/insertrecords.py",
+      "PythonCRUD/crud/insertrecordimpl.py",
+      "PythonCRUD/crud/retrieverecords.py",
+      "PythonCRUD/crud/retrieverecordsimpl.py",
+      "PythonCRUD/crud/updaterecords.py",
+      "PythonCRUD/crud/updaterecordsimpl.py",
+      "PythonCRUD/crud/deleterecords.py",
+      "PythonCRUD/crud/deleterecordsimpl.py"
+    ]
+  },
+  {
+    "question": "Which module contains the database CRUD logic?",
+    "expected_files": [
+      "PythonCRUD/crud/insertrecords.py",
+      "PythonCRUD/crud/retrieverecords.py",
+      "PythonCRUD/crud/updaterecords.py",
+      "PythonCRUD/crud/deleterecords.py"
+    ]
+  },
+  {
+    "question": "How does the application connect to MySQL?",
+    "expected_files": [
+      "PythonCRUD/crud/utils/databaseutils.py"
+    ]
+  },
+  {
+    "question": "Where is the database connection created?",
+    "expected_files": [
+      "PythonCRUD/crud/utils/databaseutils.py"
+    ]
+  },
+  {
+    "question": "How are database queries executed?",
+    "expected_files": [
+      "PythonCRUD/crud/utils/databaseutils.py",
+      "PythonCRUD/crud/utils/query.py"
+    ]
+  },
+  {
+    "question": "Where are database credentials or connection settings handled?",
+    "expected_files": [
+      "PythonCRUD/crud/utils/databaseutils.py",
+      "PythonCRUD/crud/utils/query.py"
+    ]
+  },
+  {
+    "question": "Which classes or interfaces are used by the CRUD implementation?",
+    "expected_files": [
+      "PythonCRUD/crud/commons.py",
+      "PythonCRUD/crud/insertrecords.py",
+      "PythonCRUD/crud/retrieverecords.py",
+      "PythonCRUD/crud/updaterecords.py"
+    ]
+  },
+  {
+    "question": "Where are properties or utility methods used by the CRUD application?",
+    "expected_files": [
+      "PythonCRUD/crud/props/retrieveprops.py",
+      "PythonCRUD/crud/utils/crudutils.py"
+    ]
+  },
+  {
+    "question": "Where are common CRUD definitions implemented?",
+    "expected_files": [
+      "PythonCRUD/crud/commons.py"
+    ]
+  },
+  {
+    "question": "Where are SQL queries or query definitions stored?",
+    "expected_files": [
+      "PythonCRUD/crud/utils/query.py"
+    ]
+  },
+  {
+    "question": "Where is the project setup and dependency configuration defined?",
+    "expected_files": [
+      "setup.py"
+    ]
+  },
+  {
+    "question": "Where is logging used in the application?",
+    "expected_files": [
+      "PythonCRUD/__main__.py",
+      "PythonCRUD/crud/utils/databaseutils.py",
+      "PythonCRUD/crud/insertrecordimpl.py",
+      "PythonCRUD/crud/deleterecordsimpl.py",
+      "PythonCRUD/crud/retrieverecordsimpl.py",
+      "PythonCRUD/crud/updaterecordsimpl.py"
+    ]
+  }
+]
